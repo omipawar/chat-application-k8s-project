@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   mongodb:
-    image: iemafzal/f-s_mongodb:v1
+    image: mongo
+    container_name: mongodb
     volumes:
       - mongo-data:/data/db
     environment:
@@ -10,7 +11,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - fullstack-chatapp
+      - chat
 
   backend:
     image: iemafzal/f-s_backend:v1
@@ -23,20 +24,20 @@ services:
     depends_on:
       - mongodb
     networks:
-      - fullstack-chatapp
+      - chat
 
   frontend:
-    image: iemafzal/f-s_frontend:v1
+    image: omipawar097/chatapp-frontend:latest
     container_name: full-stack_frontend
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
-      - fullstack-chatapp
+      - chat
 
 networks:
-  fullstack-chatapp:
+  chat:
     driver: bridge
 
 volumes:
