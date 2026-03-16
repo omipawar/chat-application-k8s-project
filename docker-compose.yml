@@ -11,11 +11,11 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - chat
+      - chatapp
 
   backend:
-    image: iemafzal/f-s_backend:v1
-    container_name: full-stack_backend
+    image: omipawar097/chatapp-backend:latest
+    container_name: backend
     environment:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://mongoadmin:secret@mongodb:27017/dbname?authSource=admin
@@ -24,21 +24,20 @@ services:
     depends_on:
       - mongodb
     networks:
-      - chat
+      - chatapp
 
   frontend:
     image: omipawar097/chatapp-frontend:latest
-    container_name: full-stack_frontend
+    container_name: frontend
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
-      - chat
+      - chatapp
 
 networks:
-  chat:
-    driver: bridge
+  chatapp:
 
 volumes:
   mongo-data:
